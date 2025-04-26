@@ -64,3 +64,10 @@ def login():
 
     # Show the login form if the request method is GET
     return render_template("login.html")
+    
+# logout
+@app.route("/logout")
+def logout():
+    # Forget the user and Send him back to the login page
+    session.clear()
+    return redirect("/login")
