@@ -1,10 +1,32 @@
 from flask import Flask, render_template, request, redirect, session
 from cs50 import SQL
 from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        # check if user is logged in
+        if "user_id" in session:
+            return f(*args, **kwargs)
+        # if not logged in, send them to the login page
+        else:
+            flash("You need to login first")
+            return redirect("/login")
+    return wrap
 
 app = Flask(__name__)
 
 db = SQL("sqlite:///todo.db")
+
+@app.route("/")
+# add Login Required Decorator Wrapper
+@login_required
+def index():
+    # Grab the current user’s tasks from the database
+    user_id = session["user_id"]
+    tasks = db.execute("SELECT * FROM tasks WHERE user_id = ?", user_id)
+    return render_template("index.html", tasks=tasks)
 
 
 # register
@@ -31,7 +53,6 @@ def register():
         # hash password and store the new user in the database
         hash_pw = generate_password_hash(password)
         db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, hash_pw)
-
 
         return redirect("/login")
 
@@ -64,7 +85,7 @@ def login():
 
     # Show the login form if the request method is GET
     return render_template("login.html")
-    
+
 # logout
 @app.route("/logout")
 def logout():
