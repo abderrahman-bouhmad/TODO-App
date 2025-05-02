@@ -1,13 +1,22 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <h2>Register</h2>
-    <form action="/register" method="post">
-        <input required name="username" placeholder="Username" type="text"><br>
-        <input name="password" type="password" placeholder="Password" required><br>
-        <input name="confirm" type="password" placeholder="Confirm Password" required><br>
-        <button type="submit">Register</button>
-    </form>
+    <div class="form-container">
+        <h1>Register</h1>
+        <form action="/register" method="post">
+            <label for="username">Username</label>
+            <input id="username" required name="username" placeholder="Enter your username" type="text">
 
-    <p>Already have an account? <a href="/login">Log in</a></p>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Enter your password" required>
+
+            <label for="confirm_pw">Confirm Password</label>
+            <input id="confirm_pw" name="confirm_pw" type="password" placeholder="Confirm your password" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account? <a href="/login">Log in</a></p>
+    </div>
 {% endblock %}
+
