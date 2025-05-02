@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="form-container">
+        <h1>Login</h1>
+        <form action="/login" method="post">
+            <!-- Username Field -->
+            <label for="username">Username</label>
+            <input id="username" autocomplete="off" name="username" type="text" placeholder="Enter your username" required>
+            <br>
+
+            <!-- Password Field -->
+            <label for="password">Password</label>
+            <input id="password" autocomplete="off" name="password" type="password" placeholder="Enter your password" required>
+            <br>
+
+            <!-- Submit Button -->
+            <button type="submit">Log In</button>
+        </form>
+
+        <p>Don’t have an account? <a href="/register">Register</a></p>
+    </div>
+{% endblock %}
