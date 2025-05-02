@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TODO-App</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/static/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/">Home</a>
+                {% if not "user_id" in session %}
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                {% else %}
+                    <a href="/logout">Logout</a>
+                {% endif %}
+            </nav>
+        </header>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+    </body>
+</html>
