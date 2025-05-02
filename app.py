@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
+from flask_session import Session
 from cs50 import SQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
@@ -17,6 +18,10 @@ def login_required(f):
 
 app = Flask(__name__)
 
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
 db = SQL("sqlite:///todo.db")
 
 @app.route("/")
@@ -30,36 +35,45 @@ def index():
 
 
 # register
-@app.route("/register", methods=["GET, POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         confirm_pw = request.form.get("confirm_pw")
 
-        # check for missing fields
+        # Check for missing fields
         if not username or not password or not confirm_pw:
-            return "All fields are required."
+            flash("All fields are required.")
+            return redirect("/register")
 
-        # if passwords don't match
+        # If passwords don't match
         if password != confirm_pw:
-            return "Passwords do not match."
+            flash("Passwords do not match.")
+            return redirect("/register")
 
-        # Checking if username already exists
+        # Improve password validation
+        if len(password) < 8:
+            flash("Password must be at least 8 characters long.")
+            return redirect("/register")
+
+        # Check if username already exists
         row = db.execute("SELECT * FROM users WHERE username = ?", username)
         if row:
-            return "Username already taken."
+            flash("Username already taken.")
+            return redirect("/register")
 
-        # hash password and store the new user in the database
+        # Hash password and store the new user in the database
         hash_pw = generate_password_hash(password)
         db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, hash_pw)
 
+        flash("Registration successful! Please log in.")
         return redirect("/login")
 
     return render_template("register.html")
 
 # login
-@app.route("/login", methods=["GET, POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     # clear existing session, ensuring no previous user is logged in.
     session.clear()
@@ -80,7 +94,7 @@ def login():
             return redirect("/login")
 
         # If the login is successful, store the user’s ID in the session and redirect them to the task list page
-        session["user_id"] = row[0]["if"]
+        session["user_id"] = row[0]["id"]
         return redirect("/")
 
     # Show the login form if the request method is GET
