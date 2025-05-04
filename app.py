@@ -25,7 +25,7 @@ Session(app)
 db = SQL("sqlite:///todo.db")
 
 @app.route("/")
-# add Login Required Decorator Wrapper
+# only logged-in users can access this route.
 @login_required
 def index():
     # Grab the current user’s tasks from the database
@@ -75,8 +75,9 @@ def register():
 # login
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    # clear existing session, ensuring no previous user is logged in.
-    session.clear()
+    # Clear the session only if the user is already logged in
+    if "user_id" in session:
+        session.clear()
 
     if request.method == "POST":
         username = request.form.get("username")
@@ -105,4 +106,5 @@ def login():
 def logout():
     # Forget the user and Send him back to the login page
     session.clear()
+    flash("You have been logged out.")
     return redirect("/login")
