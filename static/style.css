@@ -42,7 +42,6 @@ nav a:hover {
 }
 
 .form-container form label {
-    text-align: left;
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
