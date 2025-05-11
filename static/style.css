@@ -89,6 +89,20 @@ nav a:hover {
     text-decoration: underline;
 }
 
+.form-container .cancel-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.form-container .cancel-link a {
+    color: #555;
+    text-decoration: none;
+}
+
+.form-container .cancel-link a:hover {
+    text-decoration: underline;
+}
+
 /* Flash Messages */
 .flash-messages {
     list-style: none;
