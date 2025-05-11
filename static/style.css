@@ -1,4 +1,5 @@
 /* General Styles */
+/* Sets a clean, consistent font and background color for the entire application. */
 body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
@@ -6,16 +7,15 @@ body {
     padding: 0;
 }
 
-/* Header and Navigation */
+/* Header and Navigation links*/
 header {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
+    background-color: #333; 
+    padding: 10px 20px; 
 }
 
 nav a {
-    color: white;
-    margin-right: 15px;
+    color: white; 
+    margin-right: 15px; 
     text-decoration: none;
 }
 
@@ -23,7 +23,7 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* Login Page */
+/* Form Container (Login, Register, Edit Pages) */
 .form-container {
     max-width: 400px;
     margin: 50px auto;
@@ -97,8 +97,17 @@ nav a:hover {
     width: 50%;
 }
 
-.flash-messages li {
-    background-color: #e74c3c;
+.flash-messages .error {
+    background-color: #e74c3c; /* Red background for errors */
+    color: white; 
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.flash-messages .success {
+    background-color: #2ecc71; /* Green background for success */
     color: white;
     padding: 10px;
     border-radius: 5px;
