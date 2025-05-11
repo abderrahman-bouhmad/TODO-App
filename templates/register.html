@@ -4,19 +4,22 @@
     <div class="form-container">
         <h1>Register</h1>
         <form action="/register" method="post">
+            <!-- Username Field -->
             <label for="username">Username</label>
             <input id="username" required name="username" placeholder="Enter your username" type="text">
 
+            <!-- Password Field -->
             <label for="password">Password</label>
             <input id="password" name="password" type="password" placeholder="Enter your password" required>
 
+            <!-- Confirm Password Field -->
             <label for="confirm_pw">Confirm Password</label>
             <input id="confirm_pw" name="confirm_pw" type="password" placeholder="Confirm your password" required>
-
+            
+            <!-- Submit Button -->
             <button type="submit">Register</button>
         </form>
 
         <p>Already have an account? <a href="/login">Log in</a></p>
     </div>
 {% endblock %}
-
