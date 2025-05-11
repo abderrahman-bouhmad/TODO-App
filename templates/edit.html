@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="form-container">
+        <h1>Edit Task</h1>
+        <form action="/edit/{{ task.id }}" method="post">
+            <label for="description">Task Description</label>
+            <input id="description" name="description" type="text" value="{{ task.description }}" required>
+            <button type="submit">Save Changes</button>
+        </form>
+        
+        <!-- Provides a link to return to the home page without making changes. -->
+        <p class="cancel-link"><a href="/">Cancel</a></p>
+    </div>
+{% endblock %}
